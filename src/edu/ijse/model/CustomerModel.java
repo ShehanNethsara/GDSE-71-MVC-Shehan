@@ -12,7 +12,7 @@ public class CustomerModel {
     
     
     
-    public String saveCustomr(CustomerDto customerDto) throws SQLException, ClassNotFoundException{
+    public String updateCustomr(CustomerDto customerDto) throws SQLException, ClassNotFoundException{
         Connection connection = DBConnection.getInstance().getConnection();
         String sql = "Update  Customer SET CustTitle = ? ,CusName = ?,DOB = ?,salary = ?,CustAddress = ?, City = ?, Province =?, PostalCode =? WHERE CustID";
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -32,5 +32,14 @@ public class CustomerModel {
        return result > 0? "Successfully Update" : "Fail";
         
     }
-    
+      public String deleteCustomer(String id) throws Exception{
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "DELETE FROM Customer WHERE CustID = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setString(1, id);
+
+        int result = statement.executeUpdate();
+        return result > 0 ? "Successfully Deleted" : "Fail";
+    }
 }
